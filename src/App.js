@@ -15,10 +15,16 @@ class App extends React.Component {
     store.subscribe(()=>{
       this.forceUpdate();
     })
-    store.dispatch( addMovies(data))
-    console.log(this.props.store.getState());
+    store.dispatch( addMovies(data));
   }
-  
+  isMovieFav = (movie)=>{
+        const {Favourites} = this.props.store.getState();
+        const index =   Favourites.indexOf(movie);
+        if (index !== -1){
+            return true;
+        }
+        return false;
+  }
   render(){
     const {list} = this.props.store.getState()
 
@@ -27,18 +33,16 @@ class App extends React.Component {
       <NavBar />  
       <div className = "main">
         <div className = "tabs">
-          <ul class="nav nav-tabs">
-            <li class="nav-item m-2">
-              <a class="nav-link active" href="#">Movies</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Favourites</a>
-            </li>
-          </ul>
+         <div className = "tab">Movies</div>
+         <div className = "tab">Favourites</div>
         </div>
         <div className = "list">
             {list.map((movie, index)=>(
-              <MovieCard movie = {movie} key =  {'movies-${index}'}/>
+              <MovieCard 
+              movie = {movie}
+               key =  {'movies-${index}'} 
+              dispatch = {this.props.store.dispatch}
+              isMovieFav = {this.isMovieFav(movie)}/>
             ))}
         </div>
       </div>
