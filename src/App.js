@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import MovieCard from "./components/MovieCart";
 import NavBar from "./components/NavBar";
+import {addMovies} from "./actions/index";
 
 class App extends React.Component {
   componentDidMount(){
@@ -14,15 +15,13 @@ class App extends React.Component {
     store.subscribe(()=>{
       this.forceUpdate();
     })
-    store.dispatch({
-      type: 'ADD_MOVIES',
-      movies: data
-    })
+    store.dispatch( addMovies(data))
     console.log(this.props.store.getState());
   }
   
   render(){
-    const movies = this.props.store.getState()
+    const {list} = this.props.store.getState()
+
   return (
     <div className="App">
       <NavBar />  
@@ -38,7 +37,7 @@ class App extends React.Component {
           </ul>
         </div>
         <div className = "list">
-            {movies.map((movie, index)=>(
+            {list.map((movie, index)=>(
               <MovieCard movie = {movie} key =  {'movies-${index}'}/>
             ))}
         </div>
