@@ -19,6 +19,9 @@ body {
   justify-content: center;
   align-items: center;
 }
+.list{
+  overflow: scroll;
+}
 .search-container input {
   height: 43px;
   width: 600px;
@@ -133,7 +136,8 @@ body {
   margin-bottom: 50px;
 }
 .movie-card:nth-child(2n){
-  background-color: rgb(230, 224, 224);
+  background-color: rgb(7, 6, 6);
+  color: white;
 }
 .movie-card .left {
   flex: 1;

@@ -1,10 +1,28 @@
+import React from 'react';
 import {data} from "./data";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import MovieCard from "./components/MovieCart";
 import NavBar from "./components/NavBar";
 
-function App() {
+class App extends React.Component {
+  componentDidMount(){
+    //make api call
+    //dispatch action
+
+    const {store} = this.props;
+    store.subscribe(()=>{
+      this.forceUpdate();
+    })
+    store.dispatch({
+      type: 'ADD_MOVIES',
+      movies: data
+    })
+    console.log(this.props.store.getState());
+  }
+  
+  render(){
+    const movies = this.props.store.getState()
   return (
     <div className="App">
       <NavBar />  
@@ -20,13 +38,14 @@ function App() {
           </ul>
         </div>
         <div className = "list">
-            {data.map(movie =>(
-              <MovieCard movie = {movie}/>
+            {movies.map((movie, index)=>(
+              <MovieCard movie = {movie} key =  {'movies-${index}'}/>
             ))}
         </div>
       </div>
     </div>
   );
+ }
 }
 
 export default App;
